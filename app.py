@@ -20,6 +20,7 @@ if not os.path.exists(model_path):
 # Load the YOLO model
 model = YOLO(model_path, task="detect")
 
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'file' not in request.files:
@@ -41,6 +42,7 @@ def predict():
             detections.append({"x1": x1, "y1": y1, "x2": x2, "y2": y2, "conf": conf, "class": cls})
 
     return jsonify({"detections": detections})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.getenv("PORT", 5000)), debug=True)
