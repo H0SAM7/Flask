@@ -1,24 +1,24 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS  # Ensure CORS is imported
 import os
-import cv2
 import torch
 import numpy as np
 from PIL import Image
 from ultralytics import YOLO
 
 app = Flask(__name__)
-CORS(app)
 
-# Correct file path handling
-model_path = r"C:\Users\CS\PycharmProjects\flask\assets\best.onnx"
+# ✅ Allow all origins, methods, and headers
+CORS(app, resources={r"/predict": {"origins": "*"}})
 
-# Check if file exists
+# ✅ Ensure model path is correct for Railway
+model_path = os.path.join(os.getcwd(), "assets", "best.onnx")
+
 if not os.path.exists(model_path):
     raise FileNotFoundError(f"Model file not found at {model_path}")
 
-# Load the trained YOLOv8 model
-model = YOLO(model_path,task="detect")
+# Load the YOLO model
+model = YOLO(model_path, task="detect")
 
 @app.route('/predict', methods=['POST'])
 def predict():
