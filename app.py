@@ -7,7 +7,7 @@ import numpy as np
 from PIL import Image
 from ultralytics import YOLO
 
-app = Flask(__name__)
+app = Flask(_name_)
 CORS(app)
 
 # Correct file path handling
@@ -42,5 +42,5 @@ def predict():
 
     return jsonify({"detections": detections})
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run(host='0.0.0.0', port=5000, debug=True)
